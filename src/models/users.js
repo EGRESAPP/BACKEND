@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const usersSchema = new mongoose.Schema({
     name:{
         type:String,
         minlength:2,
-        maxLenght:30
+        maxLenght:30,
+        required:true
     },
     lastName:{
         type:String,
         minlength:2,
-        maxLenght:30
+        maxLenght:30,
+        required:true
     },
     email:{
         type:String,
@@ -22,7 +25,7 @@ const usersSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum: ['Egresado', 'Univerdidad',"Empresa"],
+        enum: ['Egresado', 'Universidad',"Empresa"],
         require:true
     }, 
     picture:{
@@ -59,6 +62,8 @@ const usersSchema = new mongoose.Schema({
 {
     timestamps: true
 });
+
+usersSchema.plugin(mongoosePaginate);
 
 const model = mongoose.model('users',usersSchema);
 
