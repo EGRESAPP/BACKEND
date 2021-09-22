@@ -26,11 +26,14 @@ const usersSchema = new mongoose.Schema({
     role:{
         type:String,
         enum: ['Egresado', 'Universidad',"Empresa"],
-        require:true
+        required:true
     }, 
-    picture:{
+    avatar:{
         type:String,
         default: 'https://mongoose-os.com/images/generic_user.png'
+    },
+    cover:{
+        type:String
     },
     phone:{
         type:Number,
