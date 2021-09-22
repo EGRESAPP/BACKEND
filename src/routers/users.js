@@ -2,6 +2,8 @@ const express = require('express')
 const users = require('../usecases/users')
 const router = express.Router();
 
+const upload = require('../lib/uploadImg');
+
 const isAuth = require("../middlewares/auth");
 
 router.get('/', async (request, response) => {
@@ -50,7 +52,7 @@ router.patch('/:id',isAuth, async (request, response) => {
       const updateUsers = await users.updateById(id)
       response.json({
           success: true,
-          message: 'user update',
+          message: 'User update',
           data: {
               users: updateUsers
           }
@@ -89,13 +91,12 @@ router.get('/:id', async (request, response) => {
 router.post('/', async (request, response) => {
     try {
         const {body} = request;
-        console.log(body);
-        const createUsers = await users.create(body)
+        let createUser = await users.create(body);
         response.json({
             success: true,
-            message: 'user created',
+            message: 'User created',
             data: {
-                users: createUsers
+                user: createUser
             }
         });
       
@@ -108,5 +109,68 @@ router.post('/', async (request, response) => {
         })
     }
 })
+
+router.put('/upload/avatar',upload.single('avatar'), async (request, response) => {
+    try {        
+        if(!request.file) 
+            throw new Error("Image required")
+  
+        const {location} = request.file;
+        
+        if(!request.body) 
+            throw new Error("Email required")
+
+        const {email} = request.body;
+        const userUpdated = await users.updateUserAvatar(location,email);
+
+        response.json({
+            success: true,
+            message: 'User Updated',
+            data: {
+                user: userUpdated
+            }
+        });
+      
+    } catch (error) {
+        response.status(400)
+        response.json({
+            success: false,
+            message: 'Error Uploding Avatar',
+            error: error.message
+        })
+    }
+});
+
+router.put('/upload/cover',upload.single('cover'), async (request, response) => {
+    try {        
+        if(!request.file) 
+            throw new Error("Image required")
+  
+        const {location} = request.file;
+        
+        if(!request.body) 
+            throw new Error("Email required")
+
+        const {email} = request.body;
+        const userUpdated = await users.updateUserCover(location,email);
+
+        response.json({
+            success: true,
+            message: 'User Updated',
+            data: {
+                user: userUpdated
+            }
+        });
+      
+    } catch (error) {
+        response.status(400)
+        response.json({
+            success: false,
+            message: 'Error Uploding Cover',
+            error: error.message
+        })
+    }
+});
+
 
 module.exports = router;
