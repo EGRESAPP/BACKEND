@@ -8,11 +8,9 @@ async function getAll(queries) {
     $or: [
       { position: { $regex: search } },
       { city: { $regex: search } },
+      { location: { $regex: search } },
       { part_time: { $regex: search } },
-      { localidad: { $regex: search } },
       { description: { $regex: search } },
-      { updatedAt: { $regex: search }},
-      { createdAt: { $regex: search }},
       {company: {$regex: user_id}}
     ],
   };
