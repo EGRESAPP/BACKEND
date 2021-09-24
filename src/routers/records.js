@@ -1,5 +1,5 @@
 const express = require('express')
-const users = require('../usecases/users')
+const records = require('../usecases/records')
 const router = express.Router();
 
 const isAuth = require("../middlewares/auth");
@@ -7,59 +7,59 @@ const isAuth = require("../middlewares/auth");
 router.get('/', async (request, response) => {
     
     try {
-      const allUsers = await users.getAll(request.query)
+      const allRecords = await records.getAll(request.query)
       response.json({
           success: true,
-          message: 'All users',
-          data: allUsers
+          message: 'All records',
+          data: allRecords
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at get all users',
+            message: 'Error at get all records',
             error: error.message
         })
     }
 })
 
-router.delete('/:id',isAuth, async (request, response) => {
+router.delete('/:id', async (request, response) => {
     try {
         const { id } = request.params
-      const deleteUsers = await users.deleteById(id)
+      const deleteRecords = await records.deleteById(id)
       response.json({
           success: true,
-          message: 'delete user',
+          message: 'delete record',
           data: {
-              users: deleteUsers
+              users: deleteRecords
           }
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at delete users',
+            message: 'Error at delete records',
             error: error.message
         })
     }
 })
 
-router.patch('/:id',isAuth, async (request, response) => {
+router.patch('/:id', async (request, response) => {
     try {
         const { id } = request.params
-      const updateUsers = await users.updateById(id)
+      const updateRecords = await records.updateById(id, request.body)
       response.json({
           success: true,
-          message: 'user update',
+          message: 'record update',
           data: {
-              users: updateUsers
+              records: updateRecords
           }
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at update user',
+            message: 'Error at update record',
             error: error.message
         })
     }
@@ -68,19 +68,19 @@ router.patch('/:id',isAuth, async (request, response) => {
 router.get('/:id', async (request, response) => {
     try {
         const { id } = request.params
-      const getUsersById = await users.getById(id)
+      const getRecordsById = await records.getById(id)
       response.json({
           success: true,
-          message: 'get user',
+          message: 'get record',
           data: {
-              users: getUsersById
+              record: getRecordsById
           }
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at get id users',
+            message: 'Error at get id records',
             error: error.message
         })
     }
@@ -89,13 +89,12 @@ router.get('/:id', async (request, response) => {
 router.post('/', async (request, response) => {
     try {
         const {body} = request;
-        console.log(body);
-        const createUsers = await users.create(body)
+        const createRecords = await records.create(body)
         response.json({
             success: true,
-            message: 'user created',
+            message: 'record created',
             data: {
-                users: createUsers
+                record: createRecords
             }
         });
       
@@ -103,7 +102,7 @@ router.post('/', async (request, response) => {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at create user',
+            message: 'Error at create record',
             error: error.message
         })
     }
