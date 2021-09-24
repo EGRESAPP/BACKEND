@@ -1,25 +1,23 @@
 const express = require('express')
-const users = require('../usecases/users')
+const users = require('../usecases/vacancies')
 const router = express.Router();
-
-const upload = require('../lib/uploadImg');
 
 const isAuth = require("../middlewares/auth");
 
 router.get('/', async (request, response) => {
     
     try {
-      const allUsers = await users.getAll(request.query)
+      const allVacancies = await vacancies.getAll(request.query)
       response.json({
           success: true,
-          message: 'All users',
-          data: allUsers
+          message: 'All vacancies',
+          data: allVacancies
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at get all users',
+            message: 'Error at get all vacancies',
             error: error.message
         })
     }
@@ -28,19 +26,19 @@ router.get('/', async (request, response) => {
 router.delete('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const deleteUsers = await users.deleteById(id)
+      const deleteVacancy = await vacancies.deleteById(id)
       response.json({
           success: true,
-          message: 'delete user',
+          message: 'delete vacancie',
           data: {
-              users: deleteUsers
+              vancancies: deleteVacancy
           }
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at delete users',
+            message: 'Error at delete vancancie',
             error: error.message
         })
     }
@@ -49,19 +47,19 @@ router.delete('/:id',isAuth, async (request, response) => {
 router.patch('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const updateUsers = await users.updateById(id)
+      const updateVacancies = await vacancies.updateById(id)
       response.json({
           success: true,
-          message: 'User update',
+          message: 'Vacancie update',
           data: {
-              users: updateUsers
+              users: updateVacancies
           }
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at update user',
+            message: 'Error at update vacancie',
             error: error.message
         })
     }
@@ -70,12 +68,12 @@ router.patch('/:id',isAuth, async (request, response) => {
 router.get('/:id', async (request, response) => {
     try {
         const { id } = request.params
-      const getUsersById = await users.getById(id)
+      const getVacancieById = await vacancie.getById(id)
       response.json({
           success: true,
-          message: 'get user',
+          message: 'get vancancie',
           data: {
-              users: getUsersById
+              users: getVacancieById
           }
       })
     } catch (error) {
@@ -91,12 +89,12 @@ router.get('/:id', async (request, response) => {
 router.post('/', async (request, response) => {
     try {
         const {body} = request;
-        let createUser = await users.create(body);
+        let createVacancie = await vacancies.create(body);
         response.json({
             success: true,
-            message: 'User created',
+            message: 'Vacancie created',
             data: {
-                user: createUser
+                user: createVacancie
             }
         });
       
@@ -110,67 +108,67 @@ router.post('/', async (request, response) => {
     }
 })
 
-router.put('/upload/avatar',upload.single('avatar'), async (request, response) => {
-    try {        
-        if(!request.file) 
-            throw new Error("Image required")
+// router.put('/upload/avatar',upload.single('avatar'), async (request, response) => {
+//     try {        
+//         if(!request.file) 
+//             throw new Error("Image required")
   
-        const {location} = request.file;
+//         const {location} = request.file;
         
-        if(!request.body) 
-            throw new Error("Email required")
+//         if(!request.body) 
+//             throw new Error("Email required")
 
-        const {email} = request.body;
-        const userUpdated = await users.updateUserAvatar(location,email);
+//         const {email} = request.body;
+//         const userUpdated = await users.updateUserAvatar(location,email);
 
-        response.json({
-            success: true,
-            message: 'User Updated',
-            data: {
-                user: userUpdated
-            }
-        });
+//         response.json({
+//             success: true,
+//             message: 'User Updated',
+//             data: {
+//                 user: userUpdated
+//             }
+//         });
       
-    } catch (error) {
-        response.status(400)
-        response.json({
-            success: false,
-            message: 'Error Uploding Avatar',
-            error: error.message
-        })
-    }
-});
+//     } catch (error) {
+//         response.status(400)
+//         response.json({
+//             success: false,
+//             message: 'Error Uploding Avatar',
+//             error: error.message
+//         })
+//     }
+// });
 
-router.put('/upload/cover',upload.single('cover'), async (request, response) => {
-    try {        
-        if(!request.file) 
-            throw new Error("Image required")
+// router.put('/upload/cover',upload.single('cover'), async (request, response) => {
+//     try {        
+//         if(!request.file) 
+//             throw new Error("Image required")
   
-        const {location} = request.file;
+//         const {location} = request.file;
         
-        if(!request.body) 
-            throw new Error("Email required")
+//         if(!request.body) 
+//             throw new Error("Email required")
 
-        const {email} = request.body;
-        const userUpdated = await users.updateUserCover(location,email);
+//         const {email} = request.body;
+//         const userUpdated = await users.updateUserCover(location,email);
 
-        response.json({
-            success: true,
-            message: 'User Updated',
-            data: {
-                user: userUpdated
-            }
-        });
+//         response.json({
+//             success: true,
+//             message: 'Vacancie Updated',
+//             data: {
+//                 user: userUpdated
+//             }
+//         });
       
-    } catch (error) {
-        response.status(400)
-        response.json({
-            success: false,
-            message: 'Error Uploding Cover',
-            error: error.message
-        })
-    }
-});
+//     } catch (error) {
+//         response.status(400)
+//         response.json({
+//             success: false,
+//             message: 'Error Uploding Cover',
+//             error: error.message
+//         })
+//     }
+// });
 
 
 module.exports = router;

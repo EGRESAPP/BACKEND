@@ -63,7 +63,7 @@ async function updateById(id, newData) {
 }
 
 function getById(id) {
-  return Users.findById(id);
+  return Vacancies.findById(id);
 }
 
 module.exports = {
