@@ -55,7 +55,7 @@ const usersSchema = new mongoose.Schema({
         minlength:2,
         maxLenght:50
     },
-    website:{
+    webSite:{
         type:String,
     },
     description:{
