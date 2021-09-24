@@ -5,6 +5,7 @@ const cors = require('cors');
 const usersRouter = require('./routers/users')
 const recordsRouter = require('./routers/records')
 const authRouter = require("./routers/auth");
+const applicationsRouter = require('./routers/applications');
 
 //middleware
 server.use(cors())
@@ -14,6 +15,7 @@ server.use(express.json());
 server.use("/users",usersRouter);
 server.use("/records",recordsRouter);
 server.use("/auth",authRouter);
+server.use("/applications",applicationsRouter);
 
 
 //exportar server
