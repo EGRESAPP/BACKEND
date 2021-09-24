@@ -31,7 +31,7 @@ async function getAll(queries) {
 }
 
 async function create(vacancieData) {
-  const { position, city, part_time, salary, localidad, description, updatedAt, createdAt, usr_id } = userData;
+  const { position, city, part_time, salary, location, description, updatedAt, createdAt, company } = vacancieData;
 //  const vacanciesFound = await Vacancies.findOne({ email });
 
   // if (usersFound) throw new error("email alredy exist");
