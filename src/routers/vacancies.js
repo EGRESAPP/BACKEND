@@ -47,7 +47,7 @@ router.delete('/:id', async (request, response) => {
 router.patch('/:id', async (request, response) => {
     try {
         const { id } = request.params
-      const updateVacancy = await vacancies.updateById(id)
+      const updateVacancy = await vacancies.updateById(id, request.body)
       response.json({
           success: true,
           message: 'Vacancy update',

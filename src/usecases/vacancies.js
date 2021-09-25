@@ -54,7 +54,7 @@ function deleteById(id) {
 async function updateById(id, newData) {
 
   //3th new:true te regresa el objeto actualizado
-  return Vacancies.findByIdAndUpdate(id,{newData});
+  return Vacancies.findByIdAndUpdate(id,newData,{new:true});
 }
 
 function getById(id) {
