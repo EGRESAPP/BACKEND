@@ -11,7 +11,6 @@ async function getAll(queries) {
       { location: { $regex: search } },
       { part_time: { $regex: search } },
       { description: { $regex: search } },
-      {company: {$regex: user_id}}
     ],
   };
   console.log(filter);
@@ -28,14 +27,14 @@ async function getAll(queries) {
   else return await Vacancies.paginate({}, options);
 }
 
-async function create(vacancieData) {
-  const { position, city, part_time, salary, location, description, updatedAt, createdAt, company } = vacancieData;
+async function create(vacancyData) {
+ // const { position, city, part_time, salary, location, description, company } = vacancyData;
 //  const vacanciesFound = await Vacancies.findOne({ email });
 
   // if (usersFound) throw new error("email alredy exist");
   // const encryptedPasword = await bcrypt.hash(password);
 
-  return Vacancies.create();
+  return Vacancies.create(vacancyData);
 }
 
 async function updateVacanciesData(id) {
@@ -53,11 +52,9 @@ function deleteById(id) {
 }
 
 async function updateById(id, newData) {
-  const { password } = newData;
 
   //3th new:true te regresa el objeto actualizado
-  return vacancy.findByIdAndUpdate(id,{newData}
-  );
+  return Vacancies.findByIdAndUpdate(id,{newData});
 }
 
 function getById(id) {

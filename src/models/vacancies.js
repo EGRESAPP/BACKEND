@@ -34,6 +34,7 @@ const vacanciesSchema = new mongoose.Schema({
 {
     timestamps:true
 });
+vacanciesSchema.plugin(mongoosePaginate);
 
 const model = mongoose.model('vacancies',vacanciesSchema);
 

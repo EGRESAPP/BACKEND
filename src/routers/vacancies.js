@@ -2,7 +2,7 @@ const express = require('express')
 const vacancies = require('../usecases/vacancies')
 const router = express.Router();
 
-const isAuth = require("../middlewares/auth");
+//const isAuth = require("../middlewares/auth");
 
 router.get('/', async (request, response) => {
     
@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
     }
 })
 
-router.delete('/:id',isAuth, async (request, response) => {
+router.delete('/:id', async (request, response) => {
     try {
         const { id } = request.params
       const deleteVacancy= await vacancies.deleteById(id)
@@ -44,7 +44,7 @@ router.delete('/:id',isAuth, async (request, response) => {
     }
 })
 
-router.patch('/:id',isAuth, async (request, response) => {
+router.patch('/:id', async (request, response) => {
     try {
         const { id } = request.params
       const updateVacancy = await vacancies.updateById(id)
