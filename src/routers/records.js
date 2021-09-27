@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
     }
 })
 
-router.delete('/:id', async (request, response) => {
+router.delete('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const deleteRecords = await records.deleteById(id)
@@ -44,7 +44,7 @@ router.delete('/:id', async (request, response) => {
     }
 })
 
-router.patch('/:id', async (request, response) => {
+router.patch('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const updateRecords = await records.updateById(id, request.body)
@@ -65,7 +65,7 @@ router.patch('/:id', async (request, response) => {
     }
 })
 
-router.get('/:id', async (request, response) => {
+router.get('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const getRecordsById = await records.getById(id)
@@ -86,7 +86,7 @@ router.get('/:id', async (request, response) => {
     }
 })
 
-router.post('/', async (request, response) => {
+router.post('/',isAuth, async (request, response) => {
     try {
         const {body} = request;
         const createRecords = await records.create(body)

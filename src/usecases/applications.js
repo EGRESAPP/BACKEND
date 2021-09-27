@@ -1,23 +1,36 @@
-const applications = require("../models/applications");
-const db = require("../lib/db");
+const Applications = require("../models/applications");
 
-function getAll () {
-  return applications.find()
+function getAll (queries) {
+  let {search,sort,page,limit} = queries
+
+    const myCustomLabels = {
+        docs: 'applications',
+        totalDocs:'totalApplications'
+    }
+    const options = {
+        populate: ['graduate','vacancy'],
+        page: parseInt(page) || 1,
+        limit: parseInt(limit) || 10,
+        sort: sort ? {createdAt:sort} : {createdAt:'asc'}, 
+        customLabels: myCustomLabels,      
+    };
+
+    return Applications.paginate({},options);
 }
 
-function create ({ user, vacancy, status }) {
-  return applications.create({ user, vacancy, status })
+function create (dataApplication) {
+  return Applications.create(dataApplication)
 }
 
-function deleteById (id) {
-  return applications.findByIdAndDelete(id)
+function deleteById(id) {
+  return Applications.findByIdAndDelete(id)
 }
 
-function getById (id) {
-  return applications.getById(id)
+function getById(id) {
+  return Applications.findById(id).populate('graduate').populate('vacancy')
 }
-function updateById (id, dataToUpdate) {
-  return applications.findByIdAndUpdate(id, dataToUpdate,{new: true})
+function updateById(id, dataToUpdate) {
+  return Applications.findByIdAndUpdate(id, dataToUpdate,{new: true})
 }
 
 module.exports = {

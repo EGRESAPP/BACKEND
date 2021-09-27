@@ -13,12 +13,12 @@ async function getAll(queries) {
       { description: { $regex: search } },
     ],
   };
-  console.log(filter);
   const myCustomLabels = {
     docs: "vacancies",
     totalDocs: "totalVacancies",
   };
   const options = {
+    populate: 'company',
     page: parseInt(page) || 1,
     limit: parseInt(limit) || 10,
     customLabels: myCustomLabels,
@@ -58,7 +58,7 @@ async function updateById(id, newData) {
 }
 
 function getById(id) {
-  return Vacancies.findById(id);
+  return Vacancies.findById(id).populate('company');
 }
 
 module.exports = {

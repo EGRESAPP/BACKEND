@@ -11,7 +11,6 @@ async function getAll(queries) {
       { lastName: { $regex: search } },
     ],
   };
-  console.log(filter);
   const myCustomLabels = {
     docs: "users",
     totalDocs: "totalUsers",

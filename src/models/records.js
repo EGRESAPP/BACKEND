@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 const recordsSchema = new mongoose.Schema({
-    user: {
+    graduate: {
         type: mongoose.Schema.Types.ObjectId, ref: 'users',
         required:true
     },
@@ -20,7 +20,12 @@ const recordsSchema = new mongoose.Schema({
     },
     type:{
         type:String,
-        enum: ['Academica','Laboral']
+        enum: ['Academica','Laboral'],
+        required:true
+    },
+    validation:{
+        type:Boolean,
+        default:false
     },
 },
 {

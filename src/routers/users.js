@@ -6,7 +6,7 @@ const upload = require('../lib/uploadImg');
 
 const isAuth = require("../middlewares/auth");
 
-router.get('/', async (request, response) => {
+router.get('/',isAuth, async (request, response) => {
     
     try {
       const allUsers = await users.getAll(request.query)
@@ -67,7 +67,7 @@ router.patch('/:id',isAuth, async (request, response) => {
     }
 })
 
-router.get('/:id', async (request, response) => {
+router.get('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const getUsersById = await users.getById(id)
@@ -111,7 +111,7 @@ router.post('/', async (request, response) => {
 })
 
 
-router.put('/upload/avatar',upload.single('avatar'), async (request, response) => {
+router.put('/upload/avatar',upload.single('avatar'),isAuth, async (request, response) => {
     try {        
         if(!request.file) 
             throw new Error("Image required")
@@ -142,7 +142,7 @@ router.put('/upload/avatar',upload.single('avatar'), async (request, response) =
     }
 });
 
-router.put('/upload/cover',upload.single('cover'), async (request, response) => {
+router.put('/upload/cover',upload.single('cover'),isAuth, async (request, response) => {
     try {        
         if(!request.file) 
             throw new Error("Image required")

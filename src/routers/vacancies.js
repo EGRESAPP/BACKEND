@@ -2,7 +2,7 @@ const express = require('express')
 const vacancies = require('../usecases/vacancies')
 const router = express.Router();
 
-//const isAuth = require("../middlewares/auth");
+const isAuth = require("../middlewares/auth");
 
 router.get('/', async (request, response) => {
     
@@ -23,7 +23,7 @@ router.get('/', async (request, response) => {
     }
 })
 
-router.delete('/:id', async (request, response) => {
+router.delete('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const deleteVacancy= await vacancies.deleteById(id)
@@ -44,15 +44,15 @@ router.delete('/:id', async (request, response) => {
     }
 })
 
-router.patch('/:id', async (request, response) => {
+router.patch('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const updateVacancy = await vacancies.updateById(id, request.body)
       response.json({
           success: true,
-          message: 'Vacancy update',
+          message: 'Vacancy updateD',
           data: {
-              vacancies: updateVacancy
+              vacancy: updateVacancy
           }
       })
     } catch (error) {
@@ -65,7 +65,7 @@ router.patch('/:id', async (request, response) => {
     }
 })
 
-router.get('/:id', async (request, response) => {
+router.get('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
       const getVacancyById = await vacancies.getById(id)
@@ -86,7 +86,7 @@ router.get('/:id', async (request, response) => {
     }
 })
 
-router.post('/', async (request, response) => {
+router.post('/',isAuth, async (request, response) => {
     try {
         const {body} = request;
         let createVacancy = await vacancies.create(body);

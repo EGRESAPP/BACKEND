@@ -3,10 +3,12 @@ const auths = require('../middlewares/auth');
 const router = express.Router();
 const applications =require("../usecases/applications")
 
+const isAuth = require("../middlewares/auth");
  //obtener la postulacion por id
-router.get('/:id',auths, async (request, response) => {
+router.get('/:id',auths,isAuth, async (request, response) => {
     try {
-        const applicationsById = await applications.get(request.query)
+        const {id} = request.params;
+        const applicationsById = await applications.getById(id)
         response.json({
             success: true,
             message: 'applicationsById',
@@ -41,10 +43,9 @@ router.get('/', async (request, response) => {
     }
 })
 // crear application
-router.post('/', async (request, response) => {
+router.post('/',isAuth, async (request, response) => {
     try {
         const {body} = request;
-        console.log(body);
         const createApplications = await applications.create(body)
         response.json({
             success: true,
@@ -64,7 +65,7 @@ router.post('/', async (request, response) => {
     }
 })
 //actualizacion del application
-router.patch('/:id', async (request, response) => {
+router.patch('/:id', isAuth, async (request, response) => {
     try {
       const { id } = request.params
       const applicationUpdated = await applications.updateById(id, request.body)
@@ -86,7 +87,7 @@ router.patch('/:id', async (request, response) => {
     }
   })
     //eliminar application
-  router.delete('/:id', async (request, response) => {
+  router.delete('/:id', isAuth, async (request, response) => {
     try {
       const { id } = request.params
       const applicationDeleted = await applications.deleteById(id)

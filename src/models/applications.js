@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const applicationSchema = new mongoose.Schema({
-    user: {
+    graduate: {
         type: mongoose.Schema.Types.ObjectId, ref: 'users',
         required:true
     },
@@ -17,6 +18,8 @@ const applicationSchema = new mongoose.Schema({
 },{
     timestamps:true
 });
+
+applicationSchema.plugin(mongoosePaginate);
 
 const model = mongoose.model('application',applicationSchema);
 

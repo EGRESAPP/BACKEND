@@ -1,5 +1,4 @@
-const Records = require('../models/records')
-const bcrypt = require('../lib/bcrypt')
+const Records = require('../models/records');
 
 async function getAll(queries) {
     let {search,sort,page,limit} = queries
@@ -17,6 +16,7 @@ async function getAll(queries) {
         totalDocs:'totalRecords'
     }
     const options = {
+        populate: 'graduate',
         page: parseInt(page) || 1,
         limit: parseInt(limit) || 10,
         sort: sort ? {createdAt:sort} : {createdAt:'asc'}, 
@@ -41,7 +41,7 @@ async function create (recordsData) {
  }
 
 function getById (id){
-    return Records.findById(id)
+    return Records.findById(id).populate('graduate')
 }
 
 module.exports = {
