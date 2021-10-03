@@ -14,11 +14,6 @@ const vacanciesSchema = new mongoose.Schema({
         maxLenght:50,
         require:true
     },
-    location:{
-        type:String,
-        minlength:2,
-        maxLenght:50
-    },
     part_time:{
         type:Boolean,
         default:false
@@ -27,7 +22,7 @@ const vacanciesSchema = new mongoose.Schema({
         type:String,
     },
     company: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'users',
+        type: mongoose.Schema.Types.ObjectId, ref: 'companies',
         required:true
     },
 },

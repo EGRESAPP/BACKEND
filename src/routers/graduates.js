@@ -1,25 +1,25 @@
 const express = require('express')
-const users = require('../usecases/users')
+const graduates = require('../usecases/graduates')
 const router = express.Router();
 
 const upload = require('../lib/uploadImg');
 
 const isAuth = require("../middlewares/auth");
 
-router.get('/',isAuth, async (request, response) => {
+router.get('/', async (request, response) => {
     
     try {
-      const allUsers = await users.getAll(request.query)
+      const allGraduates = await graduates.getAll(request.query)
       response.json({
           success: true,
-          message: 'All users',
-          data: allUsers
+          message: 'All graduates',
+          data: allGraduates
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at get all users',
+            message: 'Error at get graduates',
             error: error.message
         })
     }
@@ -28,19 +28,17 @@ router.get('/',isAuth, async (request, response) => {
 router.delete('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const deleteUsers = await users.deleteById(id)
+      const graduate = await graduates.deleteById(id)
       response.json({
           success: true,
-          message: 'delete user',
-          data: {
-              users: deleteUsers
-          }
+          message: 'Graduate deleted',
+          data: graduate
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at delete users',
+            message: 'Error at delete graduate',
             error: error.message
         })
     }
@@ -49,19 +47,17 @@ router.delete('/:id',isAuth, async (request, response) => {
 router.patch('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const updateUsers = await users.updateById(id)
+      const graduate = await graduates.updateById(id)
       response.json({
           success: true,
-          message: 'User update',
-          data: {
-              users: updateUsers
-          }
+          message: 'Graduate updated',
+          data: graduate
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at update user',
+            message: 'Error at update graduate',
             error: error.message
         })
     }
@@ -70,19 +66,17 @@ router.patch('/:id',isAuth, async (request, response) => {
 router.get('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const getUsersById = await users.getById(id)
+      const graduate = await graduates.getById(id)
       response.json({
           success: true,
-          message: 'get user',
-          data: {
-              users: getUsersById
-          }
+          message: 'Graduate obtained',
+          data: graduate
       })
     } catch (error) {
         response.status(400)
         response.json({
             success: false,
-            message: 'Error at get id users',
+            message: 'Error at get graduate',
             error: error.message
         })
     }
@@ -91,13 +85,11 @@ router.get('/:id',isAuth, async (request, response) => {
 router.post('/', async (request, response) => {
     try {
         const {body} = request;
-        let createUser = await users.create(body);
+        let graduate = await graduates.create(body);
         response.json({
             success: true,
-            message: 'User created',
-            data: {
-                user: createUser
-            }
+            message: 'Graduate created',
+            data: graduate
         });
       
     } catch (error) {
@@ -122,14 +114,12 @@ router.put('/upload/avatar',upload.single('avatar'),isAuth, async (request, resp
             throw new Error("Email required")
 
         const {email} = request.body;
-        const userUpdated = await users.updateUserAvatar(location,email);
+        const graduate = await graduates.updateAvatar(location,email);
 
         response.json({
             success: true,
-            message: 'User Updated',
-            data: {
-                user: userUpdated
-            }
+            message: 'Avatar Updated',
+            data: graduate
         });
       
     } catch (error) {
@@ -153,14 +143,12 @@ router.put('/upload/cover',upload.single('cover'),isAuth, async (request, respon
             throw new Error("Email required")
 
         const {email} = request.body;
-        const userUpdated = await users.updateUserCover(location,email);
+        const graduate = await graduates.updateCover(location,email);
 
         response.json({
             success: true,
-            message: 'User Updated',
-            data: {
-                user: userUpdated
-            }
+            message: 'Cover Updated',
+            data: graduate
         });
       
     } catch (error) {

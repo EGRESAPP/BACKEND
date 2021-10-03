@@ -3,7 +3,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 const applicationSchema = new mongoose.Schema({
     graduate: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'users',
+        type: mongoose.Schema.Types.ObjectId, ref: 'graduates',
         required:true
     },
     vacancy: {

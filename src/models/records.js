@@ -22,11 +22,7 @@ const recordsSchema = new mongoose.Schema({
         type:String,
         enum: ['Academica','Laboral'],
         required:true
-    },
-    validation:{
-        type:Boolean,
-        default:false
-    },
+    }
 },
 {
     timestamps:true

@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-const usersSchema = new mongoose.Schema({
+const graduatesSchema = new mongoose.Schema({
+    graduate: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'universities'
+    },
     name:{
         type:String,
         minlength:2,
@@ -23,10 +26,12 @@ const usersSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    role:{
-        type:String,
-        enum: ['Egresado', 'Universidad',"Empresa"],
-        required:true
+    certificate:{
+        type:Boolean,
+        default:false
+    },
+    title:{
+        type:String
     }, 
     avatar:{
         type:String,
@@ -36,9 +41,7 @@ const usersSchema = new mongoose.Schema({
         type:String
     },
     phone:{
-        type:Number,
-        min:10,
-        max:10
+        type:Number
     },
     age:{
         type:Number,
@@ -50,13 +53,8 @@ const usersSchema = new mongoose.Schema({
         minlength:2,
         maxLenght:50
     },
-    location:{
-        type:String,
-        minlength:2,
-        maxLenght:50
-    },
     webSite:{
-        type:String,
+        type:String
     },
     description:{
         type:String,
@@ -66,8 +64,8 @@ const usersSchema = new mongoose.Schema({
     timestamps: true
 });
 
-usersSchema.plugin(mongoosePaginate);
+graduatesSchema.plugin(mongoosePaginate);
 
-const model = mongoose.model('users',usersSchema);
+const model = mongoose.model('graduates',graduatesSchema);
 
 module.exports = model;
