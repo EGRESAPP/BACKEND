@@ -1,32 +1,38 @@
 const Records = require('../models/records');
 
 async function getAll(queries) {
-    let {search,sort,page,limit} = queries
-
-    const filter = {
-        $or: [
-        { description: { $regex: search } },
-        { period: { $regex: search } },
-        { position: { $regex: search } },
-        ],
-        }; 
-
-    const myCustomLabels = {
-        docs: 'records',
-        totalDocs:'totalRecords'
-    }
-    const options = {
-        populate: 'graduate',
+    if (Object.keys(queries).length !== 0) {
+      let { q, sort, order, page, limit } = queries;
+  
+      const myCustomLabels = {
+        docs: "records",
+        totalDocs: "records",
+      };
+      const options = {
         page: parseInt(page) || 1,
         limit: parseInt(limit) || 10,
-        sort: sort ? {createdAt:sort} : {createdAt:'asc'}, 
-        customLabels: myCustomLabels,      
-    };
-    if(search)
-        return await Records.paginate(filter,options);
-    else
-        return await Records.paginate({},options);
- }
+        sort: sort ? { [sort]: order } : { createdAt: "asc" },
+        customLabels: myCustomLabels,
+      };
+      if (q) {
+        const match = new RegExp(q, "i");
+        const filter = {
+          $or: [
+            { email: { $regex: match } },
+            { name: { $regex: match } },
+            { lastName: { $regex: match } },
+            { city: { $regex: match } },
+            { title: { $regex: match } },
+          ],
+        };
+  
+        return await Records.paginate(filter, options);
+      }
+      return await Records.paginate({}, options);
+    } else {
+      return await Records.find();
+    }
+  }
  
 async function create (recordsData) {
     return Records.create(recordsData)

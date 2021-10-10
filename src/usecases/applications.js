@@ -1,21 +1,37 @@
 const Applications = require("../models/applications");
 
-function getAll (queries) {
-  let {search,sort,page,limit} = queries
+async function getAll(queries) {
+  if (Object.keys(queries).length !== 0) {
+    let { q, sort, order, page, limit } = queries;
 
     const myCustomLabels = {
-        docs: 'applications',
-        totalDocs:'totalApplications'
-    }
-    const options = {
-        populate: ['graduate','vacancy'],
-        page: parseInt(page) || 1,
-        limit: parseInt(limit) || 10,
-        sort: sort ? {createdAt:sort} : {createdAt:'asc'}, 
-        customLabels: myCustomLabels,      
+      docs: "applications",
+      totalDocs: "totalApplications",
     };
+    const options = {
+      page: parseInt(page) || 1,
+      limit: parseInt(limit) || 10,
+      sort: sort ? { [sort]: order } : { createdAt: "asc" },
+      customLabels: myCustomLabels,
+    };
+    if (q) {
+      const match = new RegExp(q, "i");
+      const filter = {
+        $or: [
+          { email: { $regex: match } },
+          { name: { $regex: match } },
+          { lastName: { $regex: match } },
+          { city: { $regex: match } },
+          { title: { $regex: match } },
+        ],
+      };
 
-    return Applications.paginate({},options);
+      return await Applications.paginate(filter, options);
+    }
+    return await Applications.paginate({}, options);
+  } else {
+    return await Applications.find();
+  }
 }
 
 function create (dataApplication) {

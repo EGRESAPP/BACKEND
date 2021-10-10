@@ -1,18 +1,34 @@
-const User = require("../models/users");
+const Graduates = require("../models/graduates");
+const Companies = require("../models/companies");
+const Universities = require("../models/universities");
 const bcrypt = require("../lib/bcrypt");
 const jwt = require("../lib/jwt");
 
-async function login(email,password){
+async function login(email,passwordR,entity){
     
-    const userFound = await User.findOne({email});
+    if(!entity) throw new Error("Debes seleccionar Una Entidad");
 
-    if(!userFound) throw new Error("Invalid Credentials");
+    let found
+    if(entity==="Universities")
+        found = await Universities.findOne({email});
 
-    const isValidPassword = await bcrypt.compare(password,userFound.password);
+    if(entity==="Companies")
+        found = await Companies.findOne({email});
 
-    if(!isValidPassword) throw new Error("Invalid Credentials");
+    if(entity==="Graduates")
+        found = await Graduates.findOne({email});
 
-    return jwt.sign({id:userFound._id});
+    if(!found) throw new Error("Usuario no localizado, favor de revisar entidad o correo proporcionado");
+
+    const {_id,name,lastName,avatar,password} = found
+
+    const isValidPassword = await bcrypt.compare(passwordR,password);
+
+    if(!isValidPassword) throw new Error("Contraseña no valida");
+
+    const token = jwt.sign({id:_id});
+
+    return {_id,name,lastName,email,avatar,token,entity}
 
 }
 

@@ -2,7 +2,7 @@ const Universities = require("../models/universities");
 const bcrypt = require("../lib/bcrypt");
 
 async function getAll(queries) {
-  if (queries) {
+  if (Object.keys(queries).length !== 0) {
     let { q, sort, order, page, limit } = queries;
     const myCustomLabels = {
       docs: "universities",
@@ -29,7 +29,7 @@ async function getAll(queries) {
     }
     return await Universities.paginate({}, options);
   } else {
-    return await Universities.paginate({});
+    return await Universities.find();
   }
 }
 
@@ -81,7 +81,7 @@ async function updateById(id, newData) {
   //3th new:true te regresa el objeto actualizado
   return Universities.findByIdAndUpdate(
     id,
-    { ...newData, password: passwordEncrypted },
+    { ...newData, password: encryptedPasword },
     { new: true }
   );
 }

@@ -2,7 +2,7 @@ const Companies = require("../models/companies");
 const bcrypt = require("../lib/bcrypt");
 
 async function getAll(queries) {
-  if (queries) {
+  if (Object.keys(queries).length !== 0) {
     let { q, sort, order, page, limit } = queries;
 
     const myCustomLabels = {
@@ -31,7 +31,7 @@ async function getAll(queries) {
     }
     return await Companies.paginate({}, options);
   } else {
-    return await Companies.paginate({});
+    return await Companies.find();
   }
 }
 

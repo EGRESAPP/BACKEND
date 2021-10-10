@@ -32,6 +32,11 @@ const companiesSchema = new mongoose.Schema({
         minlength:2,
         maxLenght:50
     },
+    address:{
+        type:String,
+        minlength:2,
+        maxLenght:50
+    },
     webSite:{
         type:String
     },

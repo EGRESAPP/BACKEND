@@ -2,29 +2,37 @@ const Vacancies = require("../models/vacancies");
 const bcrypt = require("../lib/bcrypt");
 
 async function getAll(queries) {
-  let { search, sort, page, limit } = queries;
+  if (Object.keys(queries).length !== 0) {
+    let { q, sort, order, page, limit } = queries;
 
-  const filter = {
-    $or: [
-      { position: { $regex: search } },
-      { city: { $regex: search } },
-      { location: { $regex: search } },
-      { part_time: { $regex: search } },
-      { description: { $regex: search } },
-    ],
-  };
-  const myCustomLabels = {
-    docs: "vacancies",
-    totalDocs: "totalVacancies",
-  };
-  const options = {
-    populate: 'company',
-    page: parseInt(page) || 1,
-    limit: parseInt(limit) || 10,
-    customLabels: myCustomLabels,
-  };
-  if (search) return await Vacancies.paginate(filter, options);
-  else return await Vacancies.paginate({}, options);
+    const myCustomLabels = {
+      docs: "vacancies",
+      totalDocs: "totalVacancies",
+    };
+    const options = {
+      page: parseInt(page) || 1,
+      limit: parseInt(limit) || 10,
+      sort: sort ? { [sort]: order } : { createdAt: "asc" },
+      customLabels: myCustomLabels,
+    };
+    if (q) {
+      const match = new RegExp(q, "i");
+      const filter = {
+        $or: [
+          { email: { $regex: match } },
+          { name: { $regex: match } },
+          { lastName: { $regex: match } },
+          { city: { $regex: match } },
+          { title: { $regex: match } },
+        ],
+      };
+
+      return await Vacancies.paginate(filter, options);
+    }
+    return await Vacancies.paginate({}, options);
+  } else {
+    return await Vacancies.find();
+  }
 }
 
 async function create(vacancyData) {

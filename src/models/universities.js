@@ -26,6 +26,11 @@ const universitiesSchema = new mongoose.Schema({
     phone:{
         type:Number
     },
+    city:{
+        type:String,
+        minlength:2,
+        maxLenght:50
+    },
     address:{
         type:String,
         minlength:2,

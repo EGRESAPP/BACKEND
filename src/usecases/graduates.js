@@ -2,7 +2,7 @@ const Graduates = require("../models/graduates");
 const bcrypt = require("../lib/bcrypt");
 
 async function getAll(queries) {
-  if (queries) {
+  if (Object.keys(queries).length !== 0) {
     let { q, sort, order, page, limit } = queries;
 
     const myCustomLabels = {
@@ -31,15 +31,15 @@ async function getAll(queries) {
     }
     return await Graduates.paginate({}, options);
   } else {
-    return await Graduates.paginate({});
+    return await Graduates.find();
   }
 }
 
 async function create(data) {
   const { email, password } = data;
-  const Found = await Graduates.findOne({ email });
-
-  if (Found) throw new error("email alredy exist");
+  const found = await Graduates.findOne({ email });
+  if (found) 
+    throw new Error("email alredy exist");
   const encryptedPasword = await bcrypt.hash(password);
 
   return Graduates.create({ ...data, password: encryptedPasword });
@@ -48,7 +48,7 @@ async function create(data) {
 async function updateAvatar(path,email) {
     const entity = await Graduates.findOneAndUpdate({email},{avatar:path},{new:true})
     if(entity){
-        return entity
+        return entity.avatar
     }
     throw new Error("Entity not found");   
     
@@ -73,8 +73,10 @@ async function updateById(id, newData) {
   let encryptedPasword;
   if (password) encryptedPasword = await bcrypt.hash(password);
 
+  console.log(encryptedPasword)
+
   //3th new:true te regresa el objeto actualizado
-  return Graduates.findByIdAndUpdate(id,{ ...newData, password: passwordEncrypted }, { new: true }
+  return Graduates.findByIdAndUpdate(id,{ ...newData, password: encryptedPasword }, { new: true }
   );
 }
 

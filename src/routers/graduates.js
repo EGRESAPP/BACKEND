@@ -47,7 +47,7 @@ router.delete('/:id',isAuth, async (request, response) => {
 router.patch('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const graduate = await graduates.updateById(id)
+      const graduate = await graduates.updateById(id,request.body)
       response.json({
           success: true,
           message: 'Graduate updated',
@@ -102,14 +102,12 @@ router.post('/', async (request, response) => {
     }
 })
 
-
-router.put('/upload/avatar',upload.single('avatar'),isAuth, async (request, response) => {
+router.put('/upload/avatar',upload.single('avatar'), async (request, response) => {
     try {        
         if(!request.file) 
             throw new Error("Image required")
   
         const {location} = request.file;
-        
         if(!request.body) 
             throw new Error("Email required")
 
