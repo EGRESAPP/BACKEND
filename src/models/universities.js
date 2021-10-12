@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const universitiesSchema = new mongoose.Schema({
     name:{
@@ -46,6 +47,8 @@ const universitiesSchema = new mongoose.Schema({
 {
     timestamps: true
 });
+
+universitiesSchema.plugin(mongoosePaginate);
 
 const model = mongoose.model('universities',universitiesSchema);
 

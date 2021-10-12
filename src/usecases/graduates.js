@@ -57,7 +57,7 @@ async function updateAvatar(path,email) {
 async function updateCover(path,email) {
     const entity = await Graduates.findOneAndUpdate({email},{cover:path},{new:true})
     if(entity){
-        return entity
+        return entity.cover
     }
     throw new Error("Entity not found"); 
 }
@@ -72,8 +72,6 @@ async function updateById(id, newData) {
   //solo si hay password se encripta
   let encryptedPasword;
   if (password) encryptedPasword = await bcrypt.hash(password);
-
-  console.log(encryptedPasword)
 
   //3th new:true te regresa el objeto actualizado
   return Graduates.findByIdAndUpdate(id,{ ...newData, password: encryptedPasword }, { new: true }

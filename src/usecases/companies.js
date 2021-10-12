@@ -21,9 +21,7 @@ async function getAll(queries) {
         $or: [
           { email: { $regex: match } },
           { name: { $regex: match } },
-          { lastName: { $regex: match } },
           { city: { $regex: match } },
-          { title: { $regex: match } },
         ],
       };
 

@@ -102,7 +102,7 @@ router.post('/', async (request, response) => {
     }
 })
 
-router.put('/upload/avatar',upload.single('avatar'), async (request, response) => {
+router.put('/upload/avatar',upload.single('avatar'),isAuth, async (request, response) => {
     try {        
         if(!request.file) 
             throw new Error("Image required")
