@@ -5,15 +5,11 @@ async function getAll(queries) {
   if (Object.keys(queries).length !== 0) {
     let { q, sort, order, page, limit } = queries;
 
-    const myCustomLabels = {
-      docs: "vacancies",
-      totalDocs: "totalVacancies",
-    };
     const options = {
       page: parseInt(page) || 1,
       limit: parseInt(limit) || 10,
       sort: sort ? { [sort]: order } : { createdAt: "asc" },
-      customLabels: myCustomLabels,
+      populate: 'company',
     };
     if (q) {
       const match = new RegExp(q, "i");
@@ -36,12 +32,6 @@ async function getAll(queries) {
 }
 
 async function create(vacancyData) {
- // const { position, city, part_time, salary, location, description, company } = vacancyData;
-//  const vacanciesFound = await Vacancies.findOne({ email });
-
-  // if (usersFound) throw new error("email alredy exist");
-  // const encryptedPasword = await bcrypt.hash(password);
-
   return Vacancies.create(vacancyData);
 }
 

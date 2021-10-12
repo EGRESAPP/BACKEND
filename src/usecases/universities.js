@@ -4,15 +4,11 @@ const bcrypt = require("../lib/bcrypt");
 async function getAll(queries) {
   if (Object.keys(queries).length !== 0) {
     let { q, sort, order, page, limit } = queries;
-    const myCustomLabels = {
-      docs: "universities",
-      totalDocs: "totalUniversities",
-    };
+    
     const options = {
       page: parseInt(page) || 1,
       limit: parseInt(limit) || 10,
-      sort: sort ? { [sort]: order } : { createdAt: "asc" },
-      customLabels: myCustomLabels,
+      sort: sort ? { [sort]: order } : { createdAt: "asc" }
     };
     if (q) {
       const match = new RegExp(q, "i");
