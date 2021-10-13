@@ -13,11 +13,8 @@ async function getAll(queries) {
         const match = new RegExp(q, "i");
         const filter = {
           $or: [
-            { email: { $regex: match } },
-            { name: { $regex: match } },
-            { lastName: { $regex: match } },
-            { city: { $regex: match } },
-            { title: { $regex: match } },
+            { position: { $regex: match } },
+            { description: { $regex: match } },
           ],
         };
   

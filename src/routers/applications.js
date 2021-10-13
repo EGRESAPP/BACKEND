@@ -24,10 +24,11 @@ router.get('/:id',auths,isAuth, async (request, response) => {
       }
 })
  // obetener todas las postulaciones
-router.get('/', async (request, response) => {
+router.get('/graduate/:id', async (request, response) => {
     
     try {
-      const allAplications = await applications.getAll(request.query)
+      const {id} = request.params;
+      const allAplications = await applications.getAll(request.query,id)
       response.json({
           success: true,
           message: 'All applications',
@@ -42,6 +43,7 @@ router.get('/', async (request, response) => {
         })
     }
 })
+
 // crear application
 router.post('/',isAuth, async (request, response) => {
     try {
@@ -87,7 +89,7 @@ router.patch('/:id', isAuth, async (request, response) => {
     }
   })
     //eliminar application
-  router.delete('/:id', isAuth, async (request, response) => {
+router.delete('/:id', isAuth, async (request, response) => {
     try {
       const { id } = request.params
       const applicationDeleted = await applications.deleteById(id)
@@ -107,6 +109,6 @@ router.patch('/:id', isAuth, async (request, response) => {
         error: error.message
       })
     }
-  })
+})
 
 module.exports = router;
