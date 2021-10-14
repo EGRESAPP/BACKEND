@@ -33,16 +33,6 @@ async function create(vacancyData) {
   return Vacancies.create(vacancyData);
 }
 
-async function updateVacanciesData(id) {
-    const vacancy = await Vacancies.findOneAndUpdate(id)
-    if(vacancy){
-        return vacancy
-    }
-    throw new Error("Vacancy not found ;(");
-
-}
-
-
 function deleteById(id) {
   return Vacancies.findByIdAndDelete(id);
 }

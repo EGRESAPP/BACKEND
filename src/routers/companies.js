@@ -47,8 +47,8 @@ router.delete('/:id',isAuth, async (request, response) => {
 router.patch('/:id',isAuth, async (request, response) => {
     try {
         const { id } = request.params
-      const company = await companies.updateById(id)
-      response.json({
+        const company = await companies.updateById(id,request.body)
+        response.json({
           success: true,
           message: 'company updated',
           data: company

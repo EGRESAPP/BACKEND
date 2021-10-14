@@ -51,7 +51,7 @@ router.patch('/:id',isAuth, async (request, response) => {
       response.json({
           success: true,
           message: 'Graduate updated',
-          data: graduate
+          data:graduate
       })
     } catch (error) {
         response.status(400)

@@ -51,9 +51,7 @@ router.patch('/:id',isAuth, async (request, response) => {
       response.json({
           success: true,
           message: 'record update',
-          data: {
-              records: updateRecords
-          }
+          data: updateRecords
       })
     } catch (error) {
         response.status(400)
@@ -93,9 +91,7 @@ router.post('/',isAuth, async (request, response) => {
         response.json({
             success: true,
             message: 'record created',
-            data: {
-                record: createRecords
-            }
+            data: createRecords
         });
       
     } catch (error) {

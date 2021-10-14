@@ -10,6 +10,9 @@ const applicationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId, ref: 'vacancies',
         required:true
     },
+    company: {
+        type:String
+    },
     status:{
         type:String,
         enum: ['Aceptado','Rechazado',"Pendiente"],

@@ -30,9 +30,7 @@ router.delete('/:id',isAuth, async (request, response) => {
       response.json({
           success: true,
           message: 'deleted vacancy',
-          data: {
-              vacancies: deleteVacancy
-          }
+          data: deleteVacancy
       })
     } catch (error) {
         response.status(400)
@@ -51,9 +49,7 @@ router.patch('/:id',isAuth, async (request, response) => {
       response.json({
           success: true,
           message: 'Vacancy updateD',
-          data: {
-              vacancy: updateVacancy
-          }
+          data: updateVacancy
       })
     } catch (error) {
         response.status(400)
@@ -72,9 +68,7 @@ router.get('/:id',isAuth, async (request, response) => {
       response.json({
           success: true,
           message: 'get vacancy',
-          data: {
-              vacancies: getVacancyById
-          }
+          data: getVacancyById
       })
     } catch (error) {
         response.status(400)
@@ -93,9 +87,7 @@ router.post('/',isAuth, async (request, response) => {
         response.json({
             success: true,
             message: 'Vacancy created',
-            data: {
-                vacancies: createVacancy
-            }
+            data: createVacancy
         });
       
     } catch (error) {

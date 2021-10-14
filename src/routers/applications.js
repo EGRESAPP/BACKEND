@@ -52,9 +52,7 @@ router.post('/',isAuth, async (request, response) => {
         response.json({
             success: true,
             message: 'create application',
-            data: {
-                application: createApplications
-            }
+            data: createApplications
         });
       
     } catch (error) {
@@ -75,9 +73,7 @@ router.patch('/:id', isAuth, async (request, response) => {
       response.json({
         success: true,
         message: 'application updated',
-        data: {
-          application: applicationUpdated
-        }
+        data: applicationUpdated
       })
     } catch (error) {
       response.status(400)
@@ -97,9 +93,7 @@ router.delete('/:id', isAuth, async (request, response) => {
       response.json({
         success: true,
         message: 'application deleted',
-        data: {
-          application: applicationDeleted
-        }
+        data: applicationDeleted
       })
     } catch (error) {
       response.status(400)

@@ -67,17 +67,16 @@ function deleteById(id) {
 
 async function updateById(id, newData) {
   const { password } = newData;
-
-  //solo si hay password se encripta
-  let encryptedPasword;
-  if (password) encryptedPasword = await bcrypt.hash(password);
-
-  //3th new:true te regresa el objeto actualizado
-  return Universities.findByIdAndUpdate(
-    id,
-    { ...newData, password: encryptedPasword },
-    { new: true }
-  );
+  
+  if (password) {
+    //solo si hay password se encripta
+    let encryptedPasword = await bcrypt.hash(password);
+    //3th new:true te regresa el objeto actualizado
+    return Universities.findByIdAndUpdate(id,{ ...newData, password: encryptedPasword }, { new: true });
+  }else{
+    //3th new:true te regresa el objeto actualizado
+    return Universities.findByIdAndUpdate(id,newData, { new: true });
+  }
 }
 
 function getById(id) {

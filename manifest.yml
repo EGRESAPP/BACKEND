@@ -1,5 +1,4 @@
 applications:
-- name: egresapp-api
+- name: egresapp-services
   memory: 128MB
   buildpack: nodejs_buildpack
-  random-route: true
